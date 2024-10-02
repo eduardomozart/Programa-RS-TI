@@ -7,6 +7,10 @@ $(document).ready(function() {
 
     $("input[name=cep]").on("keyup", function(event){
         let cep = $("input[name=cep]").val();
-        alert(cep);
+        cep = cep.replace("-", "");
+        if(cep.length == 8){
+            alert(cep);
+        }
+        
     });
 }); 
