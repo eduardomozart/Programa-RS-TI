@@ -13,7 +13,10 @@ $(document).ready(function() {
             //alert(cep);
             $.ajax("https://viacep.com.br/ws/"+ cep +"/json")
                 .done(function(data){
-                    resposta = JSON.parse(data);
+                   let resposta = JSON.parse(data);
+                    if(resposta.erro){
+                        alert("erro")
+                    }
                     alert(data);
                 });
             
