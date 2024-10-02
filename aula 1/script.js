@@ -1,5 +1,13 @@
 $(document).ready(function() {
     $("input[name=cep]").mask("00000-000");
+    $("input[name=numero]").mask("n",{
+        translation: {
+            'n':{
+                pattern: /[0-9]/,
+                recursive: true
+            }
+        }
+    });
     $("form").on("submit", function(event){
         event.stopPropagation();
         event.preventDefault();
