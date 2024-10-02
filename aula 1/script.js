@@ -1,10 +1,12 @@
 $(document).ready(function() {
+    $("input[name=cep]").mask("00000-000");
     $("form").on("submit", function(event){
         event.stopPropagation();
         event.preventDefault();
     });
 
-    $("input[name=cep]").on("change", function(event){
-        
+    $("input[name=cep]").on("keyup", function(event){
+        let cep = $("input[name=cep]").val();
+        alert(cep);
     });
 }); 
