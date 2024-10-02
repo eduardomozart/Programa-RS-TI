@@ -13,34 +13,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="style.css">
     
-    
-    
-    <style>
-        body {
-            
-            color: #e0e0e0;
-        }
-        .border {
-            border-color: #113d6b !important;
-        }
-        .form-control {
-            background-color: #1e1e2f;
-            color: #ffffff;
-            border: 1px solid #0250a3;
-        }
-        .form-control::placeholder {
-            color: #b0b0b0;
-        }
-        .btn-primary {
-            background-color: #007bff;
-            border: none;
-        }
-        .form-select {
-            background-color: #1e1e2f;
-            color: #ffffff;
-            border: 1px solid #0250a3;
-        }
-    </style>
 </head>
 
 <body>
@@ -56,16 +28,16 @@
             <form>
                 <div class="row mt-4">
                     <div class="col-6">
-                        <input type="text" class="form-control" name="nome" placeholder="Nome" >
+                        <input type="text" class="form-control cont" name="nome" placeholder="Nome" >
                     </div>
                     <div class="col-6">
-                        <input type="text" class="form-control" name="Sobrenome" placeholder="Sobrenome" >
+                        <input type="text" class="form-control cont" name="Sobrenome" placeholder="Sobrenome" >
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-12">
                         <div class="input-group has-validation">
-                            <input type="text" class="form-control" name="cep" placeholder="CEP" pattern="[\d]{5}-[\d]{3}" >
+                            <input type="text" class="form-control cont" name="cep" placeholder="CEP" pattern="[\d]{5}-[\d]{3}" >
                             <div class="invalid-feedback">
                                 CEP invalido
                             </div>
@@ -74,23 +46,23 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-9">
-                        <input type="text" class="form-control" name="rua" placeholder="Rua" >
+                        <input type="text" class="form-control cont" name="rua" placeholder="Rua" >
                     </div>
                     <div class="col-3">
-                        <input type="text" class="form-control" name="numero" placeholder="Nº" >
+                        <input type="text" class="form-control cont" name="numero" placeholder="Nº" >
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-6">
-                        <input type="text" class="form-control" name="cidade" placeholder="Cidade" >
+                        <input type="text" class="form-control cont" name="cidade" placeholder="Cidade" >
                     </div>
                     <div class="col-6">
-                        <input type="text" class="form-control" name="bairro" placeholder="Bairro">
+                        <input type="text" class="form-control cont" name="bairro" placeholder="Bairro">
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-7">
-                        <select class="form-select" name="estado">
+                        <select class="form-select selet" name="estado">
                             <option value="AC">Acre</option>
                             <option value="AL">Alagoas</option>
                             <option value="AP">Amapá</option>
