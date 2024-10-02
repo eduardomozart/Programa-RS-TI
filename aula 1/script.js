@@ -26,7 +26,7 @@ $(document).ready(function() {
                     $("input[name=rua]").val(resposta.logradouro);
                     $("input[name=cidade]").val(resposta.localidade);
                     $("input[name=bairro]").val(resposta.bairro);
-                    $("input[name=estado]").val(resposta.estado);
+                    $("select[name=estado]").val(resposta.estado);
                     $("input[name=complemento]").val(resposta.complemento);
                 }
                 
