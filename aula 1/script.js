@@ -36,7 +36,7 @@ $(document).ready(function() {
             
         } 
         
-        const url
+        const urlEstados = 'https://'
     });
 
     
