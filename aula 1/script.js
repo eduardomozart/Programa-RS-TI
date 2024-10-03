@@ -8,6 +8,7 @@ $(document).ready(function() {
             }
         }
     });
+
     $("form").on("submit", function(event){
         event.stopPropagation();
         event.preventDefault();
@@ -36,19 +37,6 @@ $(document).ready(function() {
             
         } 
     });
-    
-    const urlEstados = 'https://servicodados.ibge.gov.br/api/v1/localidades/estados';
-    
-    // Carregar os estados na inicialização
-    $.getJSON(urlEstados, function(data) {
-        data.sort(function(a, b) {
-            return a.nome.localeCompare(b.nome);
-        });
-        
-        data.forEach(function(estado) {
-            $('#estado').append(`<option value="${estado.sigla}">${estado.nome}</option>`);
-        });
-    });
 
     $('#estado').on('change', function() {
         let estadoId = $(this).val(); // Pega o ID do estado selecionado
@@ -72,5 +60,15 @@ $(document).ready(function() {
             $('#cidade').empty(); // Limpa o select de cidades caso não haja estado selecionado
             $('#cidade').append(`<option value="">Primeiro selecione o estado</option>`);
         }
+    });
+
+    const urlEstados = 'https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome';
+
+    // Carregar os estados na inicialização
+    $.getJSON(urlEstados, function(data) {
+        $('#estado').empty();
+        data.forEach(function(estado) {
+            $('#estado').append(`<option value="${estado.sigla}">${estado.nome}</option>`);
+        });
     });
 }); 
