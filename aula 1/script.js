@@ -27,7 +27,7 @@ $(document).ready(function() {
                     $("input[name=cep]").addClass("is-invalid");
                 }else{
                     $("input[name=rua]").val(resposta.logradouro);
-                    $("input[name=cidade]").val(resposta.localidade);
+                    $("select[name=cidade]").val(resposta.localidade);
                     $("input[name=bairro]").val(resposta.bairro);
                     $("select[name=estado]").val(resposta.uf);
                     $("input[name=complemento]").val(resposta.complemento);
@@ -53,7 +53,7 @@ $(document).ready(function() {
                 });
 
                 data.forEach(function(cidade) {
-                    $('#cidade').append(`<option value="${cidade.id}">${cidade.nome}</option>`);
+                    $('#cidade').append(`<option value="${cidade.nome}">${cidade.nome}</option>`);
                 });
             });
         } else {
@@ -69,6 +69,7 @@ $(document).ready(function() {
         $('#estado').empty();
         data.forEach(function(estado) {
             $('#estado').append(`<option value="${estado.sigla}">${estado.nome}</option>`);
+            
         });
     });
 }); 
