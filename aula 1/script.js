@@ -22,7 +22,9 @@ $(document).ready(function() {
             $.ajax("https://viacep.com.br/ws/"+ cep +"/json")
             .done(function(data){
                 let resposta = JSON.parse(data);
-                if(!resposta.erro){
+                if(resposta.erro){
+                    $("input[name=cep]").addClass("is-invalid");
+                }else{
                     $("input[name=rua]").val(resposta.logradouro);
                     $("input[name=cidade]").val(resposta.localidade);
                     $("input[name=bairro]").val(resposta.bairro);
@@ -35,4 +37,7 @@ $(document).ready(function() {
         } 
         
     });
+
+    
+
 }); 
