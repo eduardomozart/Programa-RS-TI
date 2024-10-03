@@ -1,4 +1,9 @@
 $(document).ready(function() {
+    // Variável global "resposta" que armazena
+    // a resposta JSON da consulta do CEP
+    // digitado pelo usuário.
+    let resposta = '';
+
     $("input[name=cep]").mask("00000-000");
     $("input[name=numero]").mask("n",{
         translation: {
@@ -7,6 +12,16 @@ $(document).ready(function() {
                 recursive: true
             }
         }
+    });
+
+    const urlEstados = 'https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome';
+
+    // Carregar os estados na inicialização
+    $.getJSON(urlEstados, function(data) {
+        data.forEach(function(estado) {
+            $('#estado').append(`<option value="${estado.sigla}">${estado.nome}</option>`);
+            
+        });
     });
 
     $("form").on("submit", function(event){
@@ -22,14 +37,14 @@ $(document).ready(function() {
             //alert(cep);
             $.ajax("https://viacep.com.br/ws/"+ cep +"/json")
             .done(function(data){
-                let resposta = JSON.parse(data);
+                resposta = JSON.parse(data);
                 if(resposta.erro){
                     $("input[name=cep]").addClass("is-invalid");
                 }else{
                     $("input[name=rua]").val(resposta.logradouro);
-                    $("select[name=cidade]").val(resposta.localidade);
                     $("input[name=bairro]").val(resposta.bairro);
-                    $("select[name=estado]").val(resposta.uf).change();
+                    $("select[name=estado]").val(resposta.uf);
+                    $("select[name=estado]").trigger("change");
                     $("input[name=complemento]").val(resposta.complemento);
                 }
                 
@@ -55,21 +70,14 @@ $(document).ready(function() {
                 data.forEach(function(cidade) {
                     $('#cidade').append(`<option value="${cidade.nome}">${cidade.nome}</option>`);
                 });
+
+                // Popula o campo "Cidade" com a cidade que o CEP digitado
+                // pelo usuário pertence.
+                $("select[name=cidade]").val(resposta.localidade);
             });
         } else {
             $('#cidade').empty(); // Limpa o select de cidades caso não haja estado selecionado
             $('#cidade').append(`<option value="">Primeiro selecione o estado</option>`);
         }
-    });
-
-    const urlEstados = 'https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome';
-
-    // Carregar os estados na inicialização
-    $.getJSON(urlEstados, function(data) {
-        $('#estado').empty();
-        data.forEach(function(estado) {
-            $('#estado').append(`<option value="${estado.sigla}">${estado.nome}</option>`);
-            
-        });
     });
 }); 
