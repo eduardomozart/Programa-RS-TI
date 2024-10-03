@@ -29,7 +29,7 @@ $(document).ready(function() {
                     $("input[name=rua]").val(resposta.logradouro);
                     $("select[name=cidade]").val(resposta.localidade);
                     $("input[name=bairro]").val(resposta.bairro);
-                    $("select[name=estado]").val(resposta.uf);
+                    $("select[name=estado]").val(resposta.uf).change();
                     $("input[name=complemento]").val(resposta.complemento);
                 }
                 
