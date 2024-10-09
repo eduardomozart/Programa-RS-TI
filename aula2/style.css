@@ -1,0 +1,25 @@
+body {
+    padding: 20px;
+}
+
+div {
+    padding: 10px;
+}
+
+div[id^=resultado] {
+    border: 1px solid #333;
+    margin: 10px;
+}
+
+input[type="button"] {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #2980b9;
+    color: #f2f3f4;
+    border: none;
+    border-radius: 20px;
+}
+
+input[type="button"]:hover {
+    background-color: #7fb3d5;
+}

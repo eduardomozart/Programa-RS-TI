@@ -1,0 +1,17 @@
+{
+    "name": "John",
+    "age": 30,
+    "friends": [{
+        "firstName": "Mike", 
+        "lastName": "Jones"
+   },{
+        "firstName": "John", 
+        "lastName": "Smith"
+   },{
+        "firstName": "Laurence", 
+        "lastName": "Svekis"
+   },{
+        "firstName": "Alice", 
+        "lastName": "James"
+   }]
+}
