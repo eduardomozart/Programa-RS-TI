@@ -24,6 +24,17 @@ $(document).ready(function() {
         });
     });
 
+    $("#button3").on("click", function(event) {
+        $.getJSON("./data3.json", function(data) {
+            for (var i in data.results) {
+                $("#resultado3").append(data.results[i].gender);
+                $("#resultado3").append(data.results[i].name.first);
+                $("#resultado3").append(data.results[i].email);
+            }
+            $("#resultado3").append(data.info.seed);
+        });
+    });
+
     $("#limpar").on("click", function(event) {
         $("div[id^=resultado]").empty();
     });
