@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    new DataTable('table');
+
     $.getJSON("https://randomuser.me/api/?results=10&nat=br", function(data) {
         for (var i = 0; i < data.results.length; i++) {
             var user = data.results[i];
