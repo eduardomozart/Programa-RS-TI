@@ -5,7 +5,11 @@ $(document).ready(function() {
             "bProcessing": true,
             "columns": [
                 { data: "gender" },
-                { data: "gender" },
+                { data: "picture.thumbnail", 
+                    render: function (data) {
+                        return '<img src="' + data + '" class="avatar" width="48" height="48" />';
+                    }
+                },
                 { data: "gender" },
                 { data: "gender" },
                 { data: "gender" },
