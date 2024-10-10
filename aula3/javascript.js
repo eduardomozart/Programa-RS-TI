@@ -7,7 +7,7 @@ $(document).ready(function() {
                 { data: "gender" },
                 { data: "picture.thumbnail", 
                     render: function (data) {
-                        return '<img src="' + data + '" class="avatar" width="48" height="48" />';
+                        return '<img src="' + data + '" class="avatar" width="48" height="48" onerror="loadImgAsBase64(this)" />';
                     }
                 },
                 { data: "gender" },
@@ -56,11 +56,11 @@ $(document).ready(function() {
     });
 });
 
-function loadImgAsBase64(url, callback) {
+function loadImgAsBase64(el) {
     let canvas = document.createElement('canvas');
     let img = document.createElement('img');
     img.setAttribute('crossorigin', 'anonymous');
-    img.src = 'https://corsproxy.io/?' + url;
+    img.src = 'https://corsproxy.io/?' + el.src;
     
     img.onload = () => {
         canvas.height = img.height;
@@ -69,6 +69,6 @@ function loadImgAsBase64(url, callback) {
         context.drawImage(img, 0, 0);
         let dataURL = canvas.toDataURL('image/png');
         canvas = null;
-        callback(dataURL);
+        el.src = dataURL;
     };
 }
