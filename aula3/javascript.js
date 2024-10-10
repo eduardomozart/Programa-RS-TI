@@ -18,13 +18,13 @@ $(document).ready(function() {
             out += "</tr>";
             
             $("table tbody").append(out);
-        }
-    });
 
-    $.initialize(("[id^=img]"), function() {
-        loadImgAsBase64($(this).attr("src"), (dataURL) => {
-            $(this).attr("src", dataURL);
-        });
+            $("#img" + i).on("error", function () {
+                loadImgAsBase64($(this).attr("src"), (dataURL) => {
+                    $(this).attr("src", dataURL);
+                });
+            });
+        }
     });
 });
 
