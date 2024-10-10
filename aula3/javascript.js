@@ -4,7 +4,7 @@ $(document).ready(function() {
             var user = data.results[i];
             var out = "<tr>";
             out += "<td scope='row'>" + (i + 1) + "</td>";
-            out += "<td id='img" + i + "'></td>";
+            out += "<td><img id='img" + i + "' src='" + data.results[i].picture.thumbnail + "' /></td>";
             out += "<td>" + user.login.username + "</td>";
             out += "<td>" + user.name.first + "</td>";
             out += "<td>" + user.name.last + "</td>";
@@ -18,14 +18,18 @@ $(document).ready(function() {
             out += "</tr>";
             
             $("table tbody").append(out);
-            
-            loadImgAsBase64(data.results[i].picture.thumbnail, "td#img" + i);
         }
+    });
+
+    $.initialize(("[id^=img]"), function() {
+        loadImgAsBase64($(this).attr("src"), (dataURL) => {
+            $(this).attr("src", dataURL);
+        });
     });
 });
 
-function loadImgAsBase64(url, element) {
-    let canvas = document.createElement('CANVAS');
+function loadImgAsBase64(url, callback) {
+    let canvas = document.createElement('canvas');
     let img = document.createElement('img');
     img.setAttribute('crossorigin', 'anonymous');
     img.src = 'https://corsproxy.io/?' + url;
@@ -37,6 +41,6 @@ function loadImgAsBase64(url, element) {
         context.drawImage(img, 0, 0);
         let dataURL = canvas.toDataURL('image/png');
         canvas = null;
-        $(element).append(`<img src="${dataURL}">`);
+        callback(dataURL);
     };
 }
