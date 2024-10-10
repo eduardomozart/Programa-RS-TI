@@ -1,8 +1,30 @@
 $(document).ready(function() {
-    new DataTable('table');
-
     $.getJSON("https://randomuser.me/api/?results=10&nat=br", function(data) {
-        for (var i = 0; i < data.results.length; i++) {
+        $('table').dataTable( {
+            "aaData": data.results,
+            "bProcessing": true,
+            "columns": [
+                { data: "gender" },
+                { data: "gender" },
+                { data: "gender" },
+                { data: "gender" },
+                { data: "gender" },
+                { data: "gender" },
+                { data: "gender" },
+                { data: "gender" },
+                { data: "gender" },
+                { data: "gender" },
+                { data: "gender" },
+                { data: "gender" }
+            ],
+            "initComplete": function() {
+                $('table tbody tr').each(function( index ) {
+                    $('td', this).first().html(index + 1);
+                });
+            }
+        });
+
+        /* for (var i = 0; i < data.results.length; i++) {
             var user = data.results[i];
             var out = "<tr>";
             out += "<td scope='row'>" + (i + 1) + "</td>";
@@ -26,7 +48,7 @@ $(document).ready(function() {
                     $(this).attr("src", dataURL);
                 });
             });
-        }
+        } */
     });
 });
 
