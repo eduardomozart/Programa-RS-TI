@@ -25,9 +25,9 @@ $(document).ready(function() {
                         return data.location.street.name + ", " + data.location.street.number;
                     }
                 },
-                { data: "city" },
-                { data: "state" },
-                { data: "country" }
+                { data: "location.city" },
+                { data: "location.state" },
+                { data: "location.country" }
             ]
         });
 
