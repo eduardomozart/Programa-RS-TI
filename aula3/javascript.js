@@ -1,37 +1,96 @@
 $(document).ready(function() {
-    $.getJSON("https://randomuser.me/api/1.4/?results=25&nat=br", function(data) {
-        $('table').dataTable( {
-            "aaData": data.results,
-            "bProcessing": true,
-            "language": {
-                url: "https://cdn.datatables.net/plug-ins/2.1.8/i18n/pt-BR.json"
+    $('table').DataTable({    
+        serverSide: true,
+        ajax: {
+          url: "https://randomuser.me/api/1.4/",
+          data: function(){
+             // console.log(d);
+
+             var api = $('table').DataTable();
+     
+             // Get paging information
+             var info = api.page.info();
+     
+             // Update URL
+             // Send page number as a parameter
+             api.ajax.url(
+                "https://randomuser.me/api/1.4/?page=" + (info.page + 1) + "&results=10"
+             );
+
+             // https://datatables.net/forums/discussion/41210/how-to-get-recordstotal-from-response-header
+             return $.extend({}, "", {
+                // "page": pageIndex,
+                // "size": pageSize,
+                // "sort": sort,
+                // "search": searchValue
+             });
+          },
+          dataFilter: function(data) {
+            // Parse the returned API data and modify it the way datatable needs.
+            var json = jQuery.parseJSON( data ); 
+            json.data = json.results;
+            
+            // console.log(json);
+            return JSON.stringify( json ); // return JSON string
+          },
+        },
+        language: {
+            url: "https://cdn.datatables.net/plug-ins/2.1.8/i18n/pt-BR.json"
+        },
+        "columns": [
+            { data: null,
+                render: function(data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1; // Calcula o número da linha
+                }
             },
-            "columns": [
-                { data: null,
-                    render: function(data, type, row, meta) {
-                        return meta.row + meta.settings._iDisplayStart + 1; // Calcula o número da linha
-                    }
-                },
-                { data: "picture.thumbnail", 
-                    render: function (data) {
-                        return '<img src="' + data + '" class="avatar" width="48" height="48" onerror="loadImgAsBase64(this)" />';
-                    }
-                },
-                { data: "login.username" },
-                { data: "name.first" },
-                { data: "name.last" },
-                { data: "gender" },
-                { data: "email" },
-                { data: "phone" },
-                { data: null,
-                    render: function (data) {
-                        return data.location.street.name + ", " + data.location.street.number;
-                    }
-                },
-                { data: "location.city" },
-                { data: "location.state" },
-                { data: "location.country" }
-            ]
+            { data: "picture.thumbnail", 
+                render: function (data) {
+                    return '<img src="' + data + '" class="avatar" width="48" height="48" onerror="loadImgAsBase64(this)" />';
+                }
+            },
+            { data: "login.username" },
+            { data: "name.first" },
+            { data: "name.last" },
+            { data: "gender" },
+            { data: "email" },
+            { data: "phone" },
+            { data: null,
+                render: function (data) {
+                    return data.location.street.name + ", " + data.location.street.number;
+                }
+            },
+            { data: "location.city" },
+            { data: "location.state" },
+            { data: "location.country" }
+        ]
+    });
+
+    $('table').on('xhr.dt', function (e, settings, json, xhr) {
+        // console.log(json);
+        json.recordsTotal = json.recordsFiltered = 1000;
+        // Note no return - manipulate the data directly in the JSON object.
+    })
+
+    /* $.getJSON("", function(data) {
+        $('table').dataTable( {
+            serverSide: true,
+            ajax: {
+                url: '&nat=br',
+                dataFilter: function(data){
+                    var json = jQuery.parseJSON( data );
+                    json.recordsTotal = json.total;
+                    json.recordsFiltered = json.total;
+                    json.data = json.list;
+        
+                    return JSON.stringify( json ); // return JSON string
+                }
+            }
+
+
+                "aaData": data.results,
+                "bProcessing": true,
+                
+                
         });
 
         /* for (var i = 0; i < data.results.length; i++) {
@@ -59,7 +118,7 @@ $(document).ready(function() {
                 });
             });
         } */
-    });
+    // });
 });
 
 function loadImgAsBase64(el) {
