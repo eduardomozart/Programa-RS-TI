@@ -1,10 +1,11 @@
 $(document).ready(function() {
-    $('table').DataTable({    
+    var table = $('table').DataTable({ 
+        stateSave: true,   
         serverSide: true,
         ajax: {
           url: "https://randomuser.me/api/1.4/",
-          data: function(){
-             // console.log(d);
+          data: function(d){
+             console.log(d);
 
              var api = $('table').DataTable();
      
@@ -13,16 +14,15 @@ $(document).ready(function() {
      
              // Update URL
              // Send page number as a parameter
-             api.ajax.url(
-                "https://randomuser.me/api/1.4/?page=" + (info.page + 1) + "&results=10"
-             );
+             // api.ajax.url(
+             //   "https://randomuser.me/api/1.4/?page=" + (info.page + 1) + "&results=10"
+             // );
 
              // https://datatables.net/forums/discussion/41210/how-to-get-recordstotal-from-response-header
              return $.extend({}, "", {
-                // "page": pageIndex,
-                // "size": pageSize,
-                // "sort": sort,
-                // "search": searchValue
+                // "search": d.columns[2].search.value,
+                "page": (info.page + 1),
+                "results": d.length
              });
           },
           dataFilter: function(data) {
@@ -45,7 +45,7 @@ $(document).ready(function() {
             },
             { data: "picture.thumbnail", 
                 render: function (data) {
-                    return '<img src="' + data + '" class="avatar" width="48" height="48" onerror="loadImgAsBase64(this)" />';
+                    return null; // '<img src="' + data + '" class="avatar" width="48" height="48" onerror="loadImgAsBase64(this)" />';
                 }
             },
             { data: "login.username" },
@@ -70,6 +70,26 @@ $(document).ready(function() {
         json.recordsTotal = json.recordsFiltered = 1000;
         // Note no return - manipulate the data directly in the JSON object.
     })
+
+    // Setup - add a text input to each footer cell
+    $('table thead th').each(function (i) {
+        var title = $('table thead th')
+            .eq($(this).index())
+            .text();
+        // console.log(title);
+        /* $(this).append(
+            '<br><input type="text" placeholder="' + title + '" data-index="' + i + '" />'
+        ); */
+    });
+
+    // Filter event handler
+    $('table').on('keyup', 'thead input', function () {
+        table
+            .column($(this).data('index'))
+            .search(this.value)
+            .draw();
+        // console.log(this.value);
+    });
 
     /* $.getJSON("", function(data) {
         $('table').dataTable( {
