@@ -1,31 +1,34 @@
 $(document).ready(function() {
-    $.getJSON("https://randomuser.me/api/?results=10&nat=br", function(data) {
+    $.getJSON("https://randomuser.me/api/?results=25&nat=br", function(data) {
         $('table').dataTable( {
             "aaData": data.results,
             "bProcessing": true,
             "columns": [
-                { data: "gender" },
+                { data: null,
+                    render: function(data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1; // Calcula o número da linha
+                    }
+                },
                 { data: "picture.thumbnail", 
                     render: function (data) {
                         return '<img src="' + data + '" class="avatar" width="48" height="48" onerror="loadImgAsBase64(this)" />';
                     }
                 },
+                { data: "login.username" },
+                { data: "name.first" },
+                { data: "name.last" },
                 { data: "gender" },
-                { data: "gender" },
-                { data: "gender" },
-                { data: "gender" },
-                { data: "gender" },
-                { data: "gender" },
-                { data: "gender" },
-                { data: "gender" },
-                { data: "gender" },
-                { data: "gender" }
-            ],
-            "initComplete": function() {
-                $('table tbody tr').each(function( index ) {
-                    $('td', this).first().html(index + 1);
-                });
-            }
+                { data: "email" },
+                { data: "phone" },
+                { data: null,
+                    render: function (data) {
+                        return data.location.street.name + ", " + data.location.street.number;
+                    }
+                },
+                { data: "city" },
+                { data: "state" },
+                { data: "country" }
+            ]
         });
 
         /* for (var i = 0; i < data.results.length; i++) {
