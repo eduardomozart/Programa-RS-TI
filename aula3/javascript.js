@@ -45,7 +45,7 @@ $(document).ready(function() {
             },
             { data: "picture.thumbnail", 
                 render: function (data) {
-                    return null; // '<img src="' + data + '" class="avatar" width="48" height="48" onerror="loadImgAsBase64(this)" />';
+                    return  '<img src="' + data + '" class="avatar" width="48" height="48" onerror="loadImgAsBase64(this)" />';
                 }
             },
             { data: "login.username" },
