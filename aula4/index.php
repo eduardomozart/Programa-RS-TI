@@ -6,14 +6,30 @@ if (isset($_POST['submit'])) {
   // Equivalente a:
   // $nome = $_POST['nome'];
   extract($_POST);
+}
 
-  if (empty($nome)) {
-    echo '<div class="alert alert-danger" role="alert">Nome não preenchido!</div>';
-  }
-
-  if (empty($sobrenome)) {
-    echo '<div class="alert alert-danger" role="alert">Sobrenome não preenchido!</div>';
-  }
+function validaCampo(string $valorCampo, string $tipoCampo = '') {
+    switch($tipoCampo) {
+        case 'email':
+            if (filter_var($valorCampo, FILTER_VALIDATE_EMAIL)) {
+                return true; // E-mail informado é válido
+            }
+            break;
+        case 'telefone':
+            if(preg_match('/^\(\d\d\)\s[9]?\d\d\d\d-\d\d\d\d$/', $valorCampo)) {
+                return true; // Telefone informado é válido
+            }
+            break;
+        case 'cep':
+            break;
+        default:
+            if (!empty(trim($valorCampo))) {
+                return true;
+            }
+    } // Fecha o switch
+    
+    // Retorna falso apenas se falhar na validação do campo (ex. campo vazio).
+    return false;
 }
 ?>
 
@@ -47,7 +63,13 @@ if (isset($_POST['submit'])) {
             <form action="index.php" method="post">
                 <div class="row mt-4">
                     <div class="col-6">
-                        <input type="text" class="form-control cont" name="nome" placeholder="Nome" value="<?php echo (isset($nome) ? $nome : '') ?>" >
+                        <input type="text" class="form-control <?php echo (isset($_POST['nome']) && !validaCampo($_POST['nome']) ? 'is-invalid' : 'is-valid') ?>" name="nome" placeholder="Nome" value="<?php echo (isset($_POST['nome']) ? $_POST['nome'] : '') ?>" >
+                        <div class="invalid-feedback">
+                            Por favor, digite o seu nome.
+                        </div>
+                        <div class="valid-feedback">
+                            Nome validado com sucesso!
+                        </div>
                     </div>
                     <div class="col-6">
                         <input type="text" class="form-control cont" name="Sobrenome" placeholder="Sobrenome" >
@@ -55,7 +77,13 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="row mt-4">
                     <div class="col-6">
-                        <input type="text" class="form-control cont" name="telefone" placeholder="Telefone" >
+                        <input type="text" class="form-control <?php echo (isset($_POST['telefone']) && !validaCampo($_POST['telefone'], 'telefone') ? 'is-invalid' : 'is-valid') ?>" name="telefone" placeholder="Telefone" value="<?php echo (isset($_POST['telefone']) ? $_POST['telefone'] : '') ?>">
+                        <div class="invalid-feedback">
+                            Por favor, digite o seu telefone.
+                        </div>
+                        <div class="valid-feedback">
+                            Telefone validado com sucesso!
+                        </div>
                     </div>
                     <div class="col-6">
                         <input type="text" class="form-control cont" name="email" placeholder="E-mail" >
